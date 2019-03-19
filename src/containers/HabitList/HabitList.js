@@ -1,29 +1,30 @@
 import React, { Component } from 'react'
 import Habit from './../Habit/Habit';
 import HabitConfiguration from '../HabitConfiguration/HabitConfiguration';
+import './HabitList.css';
+import getThemeStyles from './../../helpers/style.helper';
+import { ThemeContext } from './../../contexts/theme.context';
 
 const HABIT_LIST = 'show-habits';
 const NEW_HABIT = 'new-habit';
 
 export default class HabitList extends Component {
-  render() {
-    return (
-      <div>
-        <header className="HabitHeader">
-          <nav>
-            <h1>Welcome to React Habits</h1>
-            <button
-              onClick={this.addHabitHandler}
-            >+</button>
-          </nav>
-        </header>
-        <div className="HabitListContainer">
+  render = () => <ThemeContext.Consumer>{themeCtx => (
+    <div className={getThemeStyles('background.primary', themeCtx, 'HabitContainer')}>
+      <header className={getThemeStyles('background.highlight10Perc', themeCtx, 'HabitHeader')}>
+        <nav>
+          <h1 className={getThemeStyles('text.primary', themeCtx)}>Welcome to React Habits</h1>
+          <button
+            onClick={this.addHabitHandler}
+          >+</button>
+        </nav>
+      </header>
+      <div className="HabitListContainer">
         {this.habitList()}
-        </div>
-        {this.newHabitForm()}
       </div>
-    )   
-  }
+      {this.newHabitForm()}
+    </div>
+  )}</ThemeContext.Consumer> 
 
   state = {
     habits: [],

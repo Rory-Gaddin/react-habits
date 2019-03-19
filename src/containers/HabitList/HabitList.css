@@ -1,4 +1,9 @@
+.HabitContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .HabitHeader {
-  background-color: rgb(50, 50, 240);
-  color: white;
+  padding: 8px;
 }
