@@ -5,7 +5,7 @@ const getThemeStyles = (paths, context, localStyles) => {
   const theme = context.theme;
 
   if (!theme) {
-    return [];
+    return localStyles || '';
   }
 
   const _paths = isArray(paths)
