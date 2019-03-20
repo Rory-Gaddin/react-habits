@@ -2,6 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './Input.module.css';
 
+export const InputType = {
+  SINGLE_LINE_TEXT: 'single-line-text',
+  TEXT_AREA: 'text-area',
+  SELECT: 'select'
+}
+
 const Input = props => {
   let inputElement = null;
   let classNames = styles.InputElement;
@@ -11,7 +17,7 @@ const Input = props => {
   const errors = props.errors || [];
 
   switch (props.elementType) {
-    case 'single-line':
+    case InputType.SINGLE_LINE_TEXT:
     inputElement = (
       <input 
         className={classNames} 
@@ -22,7 +28,7 @@ const Input = props => {
     )
     break;
 
-    case 'text-area':
+    case InputType.TEXT_AREA:
     inputElement = (
       <textarea 
         className={classNames} 
@@ -33,7 +39,7 @@ const Input = props => {
     )
     break;
 
-    case 'select':
+    case InputType.SELECT:
     inputElement = (
       <select 
         className={classNames}
@@ -70,7 +76,7 @@ const Input = props => {
 
 Input.propTypes = {
   elementType: PropTypes.string.isRequired,
-  elementConfig: PropTypes.object.isRequired,
+  elementConfig: PropTypes.object,
   changed: PropTypes.func.isRequired,
   value: PropTypes.string,
   errors: PropTypes.array

@@ -37,6 +37,9 @@ export const lightTheme = {
     },
     againstPrimaryBg: {
       color: lightThemeColors.complementText
+    },
+    against30PercBg: {
+      color: lightThemeColors.complementText
     }
   },
   background: {

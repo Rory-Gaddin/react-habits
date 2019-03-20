@@ -4,7 +4,6 @@ import styles from './RaisedButton.module.css';
 import { clone } from 'lodash';
 
 const thisPropTypes = {
-  text: PropTypes.string.isRequired,
   type: PropTypes.string,
   disabled: PropTypes.bool,
   onClick: PropTypes.func.isRequired

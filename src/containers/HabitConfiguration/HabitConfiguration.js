@@ -1,23 +1,24 @@
 import React, { Component } from 'react'
 import './HabitConfiguration.css'
 import RaisedButton from './../../components/UI/RaisedButton/RaisedButton';
+import Input, { InputType } from './../../components/UI/Input/Input';
 
 export default class HabitConfiguration extends Component {
   render() {
     return (
-      <div>
-        <input 
-          type="text" 
-          onInput={this.nameInputHandler}
-          placeholder="Name"
+      <div className="HabitConfigurationForm">
+        <Input 
+          elementType={InputType.SINGLE_LINE_TEXT}
+          elementConfig={{ placeholder: 'Habit Title' }}
+          changed={this.nameInputHandler}
           value={this.state.name}
-        ></input>
-        <input 
-          type="text" 
-          onInput={this.questionInputHandler}
-          placeholder="Question (e.g., Did you ... today?)"
+        ></Input>
+        <Input
+          elementType={InputType.SINGLE_LINE_TEXT}
+          changed={this.questionInputHandler}
+          elementConfig={{ placeholder: 'Question (e.g., Did you ... today?)' }}
           value={this.state.question}
-        ></input>
+        ></Input>
         <RaisedButton
           disabled={!this.formIsValid}
           onClick={this.saveHandler}

@@ -41,6 +41,7 @@ class HabitList extends Component {
 
   newHabitForm = () => this.props.displayState === HabitDisplayState.NEW_HABIT
   ? <Modal 
+      title="Create a new Habit"
       actions={[]}
       onDismiss={() => this.props.onDisplayStateChange(HabitDisplayState.SHOW_HABIT_LIST)}
     >
