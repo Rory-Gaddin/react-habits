@@ -11,3 +11,7 @@
   box-shadow: rgba(0,0,0,0.5) 2px 2px 12px;
   z-index: 50;
 }
+
+.HabitHeader h3 {
+  margin: 8px;
+}

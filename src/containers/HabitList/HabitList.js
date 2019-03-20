@@ -4,6 +4,7 @@ import HabitConfiguration from '../HabitConfiguration/HabitConfiguration';
 import './HabitList.css';
 import getThemeStyles from './../../helpers/style.helper';
 import { ThemeContext } from './../../contexts/theme.context';
+import habitsService from './../../http-services/habits-service';
 
 const HABIT_LIST = 'show-habits';
 const NEW_HABIT = 'new-habit';
@@ -31,9 +32,16 @@ export default class HabitList extends Component {
    */
 
   habitList = () => this.state.displayState === HABIT_LIST
-  ? this.state.habits.map(h => 
-    <Habit key={h.id} habit={h} />
-  )
+  ? this.state.habits.length > 0
+    ? this.state.habits.map(h => 
+        <Habit key={h.id} habit={h} />
+      )
+    : <ThemeContext.Consumer>{themeCtx => (
+        <div className={getThemeStyles('text.secondary', themeCtx, 'NoHabitsMessage')}>
+          <p>You don't have any Habits defined yet.</p>
+          <p>Try creating a new one from the menu above</p>
+        </div>
+      )}</ThemeContext.Consumer>
   : null;
 
   newHabitForm = () => this.state.displayState === NEW_HABIT
@@ -47,14 +55,9 @@ export default class HabitList extends Component {
    * Lifecycle hooks
    */
 
-  componentDidMount() {
-    this.setState({
-      habits: [
-        { id: 'ABCD', name: 'Mow the lawn', question: 'Did you mow the lawn this week?'},
-        { id: 'DEF', name: 'Shave your beard', question: 'Did you shave your beard in the last few days?'},
-        { id: 'XYZ', name: 'Say something nice to someone', question: 'Have you been decent...upstanding?!'},
-      ]
-    })
+  async componentDidMount() {
+    const _habits = await this._getAllHabits();
+    this.setState({ habits: _habits })
   }
 
   /** 
@@ -73,4 +76,16 @@ export default class HabitList extends Component {
     }));
   }
   
+  /** 
+   * Private methods
+   */
+  _getAllHabits = async () => {
+    const response = await habitsService.get('/habits');
+    const habits = response.data.map(h => ({
+      id: h.id,
+      name: h.name,
+      question: h.question
+    }));
+    return habits;
+  }
 }
