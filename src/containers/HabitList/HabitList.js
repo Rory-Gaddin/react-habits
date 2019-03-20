@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
-import Habit from './../Habit/Habit';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import HabitConfiguration from '../HabitConfiguration/HabitConfiguration';
-import './HabitList.css';
-import getThemeStyles from './../../helpers/style.helper';
 import { ThemeContext } from './../../contexts/theme.context';
-import habitsService from './../../http-services/habits-service';
+import getThemeStyles from './../../helpers/style.helper';
+import * as habitActions from './../../store/actions/habit.actions';
+import { HabitDisplayState } from './../../store/reducers/habit.reducer';
+import Habit from './../Habit/Habit';
+import './HabitList.css';
 
-const HABIT_LIST = 'show-habits';
-const NEW_HABIT = 'new-habit';
-
-export default class HabitList extends Component {
+class HabitList extends Component {
   render = () => <ThemeContext.Consumer>{themeCtx => (
     <div className={getThemeStyles('background.primary', themeCtx, 'HabitContainer')}>
       <button
-        onClick={this.addHabitHandler}
+        onClick={this.props.onAddNewHabit}
       >+</button>
       <div className="HabitListContainer">
         {this.habitList()}
@@ -22,18 +21,13 @@ export default class HabitList extends Component {
     </div>
   )}</ThemeContext.Consumer> 
 
-  state = {
-    habits: [],
-    displayState: HABIT_LIST
-  }
-
   /** 
    * UI Fragment Functions
    */
 
-  habitList = () => this.state.displayState === HABIT_LIST
-  ? this.state.habits.length > 0
-    ? this.state.habits.map(h => 
+  habitList = () => this.props.displayState === HabitDisplayState.SHOW_HABIT_LIST
+  ? this.props.habits.length > 0
+    ? this.props.habits.map(h => 
         <Habit key={h.id} habit={h} />
       )
     : <ThemeContext.Consumer>{themeCtx => (
@@ -44,7 +38,7 @@ export default class HabitList extends Component {
       )}</ThemeContext.Consumer>
   : null;
 
-  newHabitForm = () => this.state.displayState === NEW_HABIT
+  newHabitForm = () => this.props.displayState === HabitDisplayState.NEW_HABIT
   ? <HabitConfiguration 
       habit={null}
       onSave={this.saveNewHabitHandler}
@@ -56,8 +50,7 @@ export default class HabitList extends Component {
    */
 
   async componentDidMount() {
-    const _habits = await this._getAllHabits();
-    this.setState({ habits: _habits })
+    this.props.onRefreshHabitList();
   }
 
   /** 
@@ -65,27 +58,24 @@ export default class HabitList extends Component {
    */
 
   addHabitHandler = () => {
-    this.setState({ displayState: NEW_HABIT })
+    this.setState({ displayState: HabitDisplayState.NEW_HABIT })
   }
 
   saveNewHabitHandler = (newHabit) => {
-    const _new = {...newHabit, id: (this.state.habits.length + 1).toString()}
-    this.setState(prevState => ({ 
-      habits: prevState.habits.concat([_new]),
-      displayState: HABIT_LIST
-    }));
-  }
-  
-  /** 
-   * Private methods
-   */
-  _getAllHabits = async () => {
-    const response = await habitsService.get('/habits');
-    const habits = response.data.map(h => ({
-      id: h.id,
-      name: h.name,
-      question: h.question
-    }));
-    return habits;
+    const _new = {...newHabit, id: (this.props.habits.length + 1).toString()}
+    this.props.onSaveHabit(_new);
   }
 }
+
+const mapStateToProps = state => ({ 
+  habits: state.HABITS.habits,
+  displayState: state.HABITS.displayState
+})
+
+const mapDispatchToProps = dispatch => ({
+  onRefreshHabitList: () => dispatch({ type: habitActions.REFRESH_HABIT_LIST }),
+  onAddNewHabit: () => dispatch({ type: habitActions.REQUEST_NEW_HABIT_FORM }),
+  onSaveHabit: (habit) => dispatch({ type: habitActions.SAVE_HABIT, habit: habit })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HabitList)
