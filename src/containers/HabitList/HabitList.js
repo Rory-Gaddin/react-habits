@@ -11,14 +11,9 @@ const NEW_HABIT = 'new-habit';
 export default class HabitList extends Component {
   render = () => <ThemeContext.Consumer>{themeCtx => (
     <div className={getThemeStyles('background.primary', themeCtx, 'HabitContainer')}>
-      <header className={getThemeStyles('background.highlight10Perc', themeCtx, 'HabitHeader')}>
-        <nav>
-          <h1 className={getThemeStyles('text.primary', themeCtx)}>Welcome to React Habits</h1>
-          <button
-            onClick={this.addHabitHandler}
-          >+</button>
-        </nav>
-      </header>
+      <button
+        onClick={this.addHabitHandler}
+      >+</button>
       <div className="HabitListContainer">
         {this.habitList()}
       </div>
