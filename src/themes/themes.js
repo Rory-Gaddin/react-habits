@@ -18,6 +18,9 @@ const lightThemeColors = {
 export const lightTheme = {
   text: 
   {
+    heading: {
+      fontFamily: 'Sedgwick Ave'
+    },
     primary: {
       color: lightThemeColors.normalText,
       fontWeight: 'default'

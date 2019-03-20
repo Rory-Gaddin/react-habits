@@ -12,7 +12,7 @@ class App extends Component {
         <ThemeContext.Consumer>{themeCtx => (<React.Fragment>
           <header className={getThemeStyles('background.highlight10Perc', themeCtx, 'HabitHeader')}>
             <nav>
-              <h3 className={getThemeStyles('text.againstPrimaryBg', themeCtx)}>Uptick</h3> 
+              <h3 className={getThemeStyles(['text.againstPrimaryBg', 'text.heading'], themeCtx)}>Uptick</h3> 
             </nav>
           </header>
           <div className="App">
