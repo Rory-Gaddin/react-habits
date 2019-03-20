@@ -1,0 +1,44 @@
+.RaisedButton {
+  border: none;
+  font-size: large;
+  margin: 12px;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: #222 1px 1px 12px;
+  cursor: pointer;
+  color: white;
+  background-color: #777;
+  outline: none;
+  min-width: 150px;
+  max-width: 200px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 150ms ease-out;
+  transform: translateY(0px)
+}
+
+.RaisedButton:hover {
+  box-shadow: #222 4px 4px 18px;
+  transform: translateY(-2px)
+}
+
+.RaisedButton:disabled {
+  background-color: #444;
+}
+
+.Primary {
+  background-color: #42F;
+}
+
+.Accent {
+  background-color: #F82;
+}
+
+.Warn {
+  background-color: #F24;
+}
+
+.Good {
+  background-color: #8C0;
+}
