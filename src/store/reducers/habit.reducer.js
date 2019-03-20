@@ -24,8 +24,15 @@ const reducer = (state = initialState, action) => {
 
     case habitActions.SAVE_HABIT:
     return {...state,
-      habits: state.habits.concat(action.habit),
-      displayState: HabitDisplayState.SHOW_HABIT_LIST
+      habits: state.habits.concat(action.habit)
+    }
+
+    case habitActions.CHANGE_DISPLAY_STATE:
+    if (!Object.keys(HabitDisplayState).find(state => HabitDisplayState[state] === action.displayState)) {
+      throw new Error(`The display state "${action.displayState}" is not recognized`)
+    }
+    return {...state,
+      displayState: action.state
     }
 
     default:

@@ -23,7 +23,7 @@ const RaisedButton = props => {
       disabled={props.disabled}
       onClick={props.onClick}
       {...domProps}
-    >{props.text}</button>
+    >{props.children}</button>
   )
 }
 

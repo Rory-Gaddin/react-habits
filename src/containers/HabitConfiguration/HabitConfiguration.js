@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './HabitConfiguration.css'
+import RaisedButton from './../../components/UI/RaisedButton/RaisedButton';
 
 export default class HabitConfiguration extends Component {
   render() {
@@ -17,10 +18,10 @@ export default class HabitConfiguration extends Component {
           placeholder="Question (e.g., Did you ... today?)"
           value={this.state.question}
         ></input>
-        <button
+        <RaisedButton
           disabled={!this.formIsValid}
           onClick={this.saveHandler}
-        >Save Habit</button>
+        >Save Habit</RaisedButton>
       </div>
     )
   }
