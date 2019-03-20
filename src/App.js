@@ -12,7 +12,7 @@ class App extends Component {
         <ThemeContext.Consumer>{themeCtx => (<React.Fragment>
           <header className={getThemeStyles('background.highlight10Perc', themeCtx, 'HabitHeader')}>
             <nav>
-              <h3 className={getThemeStyles('text.primary', themeCtx)}>Habitsch</h3> 
+              <h3 className={getThemeStyles('text.againstPrimaryBg', themeCtx)}>Habitsch</h3> 
             </nav>
           </header>
           <div className="App">
@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   state = {
-    currentTheme: themes.darkTheme
+    currentTheme: themes.lightTheme
   }
 }
 
