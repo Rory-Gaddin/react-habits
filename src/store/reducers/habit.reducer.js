@@ -8,7 +8,7 @@ export const HabitDisplayState = {
 
 const initialState = {
   habits: [],
-  displayState: HabitDisplayState.SHOW_HABIT_LIST
+  displayState: HabitDisplayState.SHOW_HABIT_LIST,
 }
 
 const reducer = (state = initialState, action) => {
@@ -32,7 +32,7 @@ const reducer = (state = initialState, action) => {
       throw new Error(`The display state "${action.displayState}" is not recognized`)
     }
     return {...state,
-      displayState: action.state
+      displayState: action.displayState
     }
 
     default:
