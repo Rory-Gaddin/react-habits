@@ -81,10 +81,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onRefreshHabitList: () => dispatch({ type: habitActions.REFRESH_HABIT_LIST }),
-  onAddNewHabit: () => dispatch({ type: habitActions.REQUEST_NEW_HABIT_FORM }),
-  onSaveHabit: (habit) => dispatch({ type: habitActions.SAVE_HABIT, habit: habit }),
-  onDisplayStateChange: (newState) => dispatch({ type: habitActions.CHANGE_DISPLAY_STATE, displayState: newState })
+  onRefreshHabitList: () => dispatch(habitActions.refreshHabitList()),
+  onAddNewHabit: () => dispatch(habitActions.requestNewHabitForm()),
+  onSaveHabit: (habit) => dispatch(habitActions.saveHabit(habit)),
+  onDisplayStateChange: (newState) => dispatch(habitActions.changeDisplayState(newState))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HabitList)
