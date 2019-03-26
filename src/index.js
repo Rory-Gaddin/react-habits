@@ -7,15 +7,15 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { logger } from './store/middleware/logger';
 import habitsReducer from './store/reducers/habit.reducer';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   HABITS: habitsReducer
 });
 
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(logger)
+  applyMiddleware(logger, thunk)
 ));
 
 ReactDOM.render(
