@@ -11,6 +11,8 @@ export const DataLoadingState = {
   WAITING: 'waiting'
 }
 
+const dataLoadingOperations = {};
+
 const initialState = {
   habits: [],
   displayState: HabitDisplayState.SHOW_HABIT_LIST,
@@ -45,8 +47,20 @@ const reducer = (state = initialState, action) => {
     if (!Object.keys(DataLoadingState).find(state => DataLoadingState[state] === action.state)) {
       throw new Error(`The data loading state "${action.state}" is not recognized`)
     }
+    if (!action.operation) throw new Error(`Must specify the operation when calling changeDataLoadingStatus`)
+
+    if (action.state === DataLoadingState.LOADING) {
+      dataLoadingOperations[action.operation] = true;
+    } else {
+      delete dataLoadingOperations[action.operation]
+    }
+
+    const overallState = Object.keys(dataLoadingOperations).length > 0
+    ? DataLoadingState.LOADING
+    : DataLoadingState.WAITING
+
     return {...state,
-      dataLoadingState: action.state
+      dataLoadingState: overallState
     }
 
     default:

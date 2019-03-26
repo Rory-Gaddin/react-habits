@@ -7,20 +7,22 @@ export const requestNewHabitForm = () => ({
 
 export const REFRESH_HABIT_LIST = 'refresh-habit-list';
 export const refreshHabitList = () => dispatch => {
-  dispatch(changeDataLoadingStatus(DataLoadingState.LOADING));
+  const operation = 'refreshHabitList'
+  dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
   
   setTimeout(() => {
-    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING));
+    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
     dispatch(({ type: REFRESH_HABIT_LIST }))
-  }, 2000)
+  }, 10000)
 }
 
 export const SAVE_HABIT = 'save-habit';
 export const saveHabit = habit => dispatch => {
-  dispatch(changeDataLoadingStatus(DataLoadingState.LOADING));
+  const operation  = 'saveHabit'
+  dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
 
   setTimeout(() => {
-    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING));
+    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
 
     dispatch({
       type: SAVE_HABIT,
@@ -36,7 +38,8 @@ export const changeDisplayState = newState => ({
 })
 
 export const CHANGE_DATA_LOADING_STATUS = 'change-data-loading-status';
-export const changeDataLoadingStatus = status => ({
+export const changeDataLoadingStatus = (status, operation) => ({
   type: CHANGE_DATA_LOADING_STATUS,
-  state: status
+  state: status,
+  operation: operation
 })
