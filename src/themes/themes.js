@@ -55,5 +55,19 @@ export const lightTheme = {
     highlight30Perc: {
       backgroundColor: lightThemeColors.perc30
     }
+  },
+  buttons: {
+    primary: {
+      backgroundColor: '#281D3D'
+    },
+    accent: {
+      backgroundColor: '#F38902'
+    },    
+    warn: {
+      backgroundColor: '#F2355B'
+    },    
+    good: {
+      backgroundColor: '#02A694'
+    }
   }
 }

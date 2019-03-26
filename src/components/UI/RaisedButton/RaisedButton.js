@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import styles from './RaisedButton.module.css';
+import './RaisedButton.css';
 import { clone } from 'lodash';
+import { ThemeContext } from './../../../contexts/theme.context';
+import getThemeStyles from './../../../helpers/style.helper';
 
 const thisPropTypes = {
   type: PropTypes.string,
@@ -13,11 +15,12 @@ const RaisedButton = props => {
   const domProps = clone(props);
   Object.keys(thisPropTypes).forEach(key => delete domProps[key]);
 
+  const themeCtx = useContext(ThemeContext)
+
   return (
     <button 
       className={
-        `${styles.RaisedButton} 
-        ${props.type ? (styles[props.type] || '') : 'Primary'}`
+        `RaisedButton ${getThemeStyles('buttons.' + (props.type || 'primary'), themeCtx)}`
       }
       disabled={props.disabled}
       onClick={props.onClick}

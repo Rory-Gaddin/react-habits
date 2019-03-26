@@ -26,19 +26,3 @@
 .RaisedButton:disabled {
   background-color: #444;
 }
-
-.Primary {
-  background-color: #42F;
-}
-
-.Accent {
-  background-color: #F82;
-}
-
-.Warn {
-  background-color: #F24;
-}
-
-.Good {
-  background-color: #8C0;
-}
