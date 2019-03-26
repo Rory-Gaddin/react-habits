@@ -9,10 +9,15 @@ export const refreshHabitList = () => ({
 })
 
 export const SAVE_HABIT = 'save-habit';
-export const saveHabit = habit => ({
-  type: SAVE_HABIT,
-  habit: habit
-})
+export const saveHabit = habit => dispatch => {
+  setTimeout(() => 
+    dispatch({
+      type: SAVE_HABIT,
+      habit: habit
+    }), 
+    2000
+  );
+};
 
 export const CHANGE_DISPLAY_STATE = 'change-display-state';
 export const changeDisplayState = newState => ({
