@@ -3,7 +3,7 @@ export const requestNewHabitForm = () => ({
   type: REQUEST_NEW_HABIT_FORM
 })
 
-export const REFRESH_HABIT_LIST = 'refresh-list';
+export const REFRESH_HABIT_LIST = 'refresh-habit-list';
 export const refreshHabitList = () => ({
   type: REFRESH_HABIT_LIST
 })
