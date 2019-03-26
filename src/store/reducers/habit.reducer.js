@@ -27,12 +27,13 @@ const reducer = (state = initialState, action) => {
     }
 
     case habitActions.REFRESH_HABIT_LIST:
-    // TODO: Async implementation here!
-    break;
+    return {...state,
+      habits: action.habits.sort(sortHabits)
+    }
 
     case habitActions.SAVE_HABIT:
     return {...state,
-      habits: state.habits.concat(action.habit)
+      habits: state.habits.concat(action.habit).sort(sortHabits)
     }
 
     case habitActions.CHANGE_DISPLAY_STATE:
@@ -78,12 +79,5 @@ export default reducer;
 /** 
  * Private methods
  */
-/* const _getAllHabits = async () => {
-  const response = await habitsService.get('/habits');
-  const habits = response.data.map(h => ({
-    id: h.id,
-    name: h.name,
-    question: h.question
-  }));
-  return habits;
-} */
+
+const sortHabits = (a, b) => a.name.localeCompare(b.name)

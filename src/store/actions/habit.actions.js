@@ -12,8 +12,8 @@ export const refreshHabitList = () => dispatch => {
   
   setTimeout(() => {
     dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
-    dispatch(({ type: REFRESH_HABIT_LIST }))
-  }, 10000)
+    dispatch(({ type: REFRESH_HABIT_LIST, habits: [] }))
+  }, 2000)
 }
 
 export const SAVE_HABIT = 'save-habit';
