@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import App from './App';
+import './index.css';
+import * as serviceWorker from './serviceWorker';
+import { logger } from './store/middleware/logger';
 import habitsReducer from './store/reducers/habit.reducer';
 
 const rootReducer = combineReducers({
   HABITS: habitsReducer
 });
 
-const store = createStore(rootReducer);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
+  applyMiddleware(logger)
+));
 
 ReactDOM.render(
   <Provider store={store}>
