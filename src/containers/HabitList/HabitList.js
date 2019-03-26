@@ -4,7 +4,7 @@ import HabitConfiguration from '../HabitConfiguration/HabitConfiguration';
 import { ThemeContext } from './../../contexts/theme.context';
 import getThemeStyles from './../../helpers/style.helper';
 import * as habitActions from './../../store/actions/habit.actions';
-import { HabitDisplayState } from './../../store/reducers/habit.reducer';
+import { HabitDisplayState, DataLoadingState } from './../../store/reducers/habit.reducer';
 import Habit from './../Habit/Habit';
 import './HabitList.css';
 import RaisedButton from './../../components/UI/RaisedButton/RaisedButton';
@@ -17,6 +17,7 @@ class HabitList extends Component {
         onClick={this.props.onAddNewHabit}
       >Add a Habit</RaisedButton>
       <div className="HabitListContainer">
+        {this.loadingMessage()}
         {this.habitList()}
       </div>
       {this.newHabitForm()}
@@ -52,6 +53,10 @@ class HabitList extends Component {
     </Modal>
   : null;
 
+  loadingMessage = () => this.props.isLoading
+  ? <div>Loading data...</div>
+  : null
+
   /** 
    * Lifecycle hooks
    */
@@ -77,7 +82,8 @@ class HabitList extends Component {
 
 const mapStateToProps = state => ({ 
   habits: state.HABITS.habits,
-  displayState: state.HABITS.displayState
+  displayState: state.HABITS.displayState,
+  isLoading: state.HABITS.dataLoadingState === DataLoadingState.LOADING
 })
 
 const mapDispatchToProps = dispatch => ({

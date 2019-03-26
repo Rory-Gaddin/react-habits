@@ -6,9 +6,15 @@ export const HabitDisplayState = {
   NEW_HABIT: 'new-habit'
 }
 
+export const DataLoadingState = {
+  LOADING: 'loading',
+  WAITING: 'waiting'
+}
+
 const initialState = {
   habits: [],
   displayState: HabitDisplayState.SHOW_HABIT_LIST,
+  dataLoadingState: DataLoadingState.IDLE
 }
 
 const reducer = (state = initialState, action) => {
@@ -33,6 +39,14 @@ const reducer = (state = initialState, action) => {
     }
     return {...state,
       displayState: action.displayState
+    }
+
+    case habitActions.CHANGE_DATA_LOADING_STATUS:
+    if (!Object.keys(DataLoadingState).find(state => DataLoadingState[state] === action.state)) {
+      throw new Error(`The data loading state "${action.state}" is not recognized`)
+    }
+    return {...state,
+      dataLoadingState: action.state
     }
 
     default:
