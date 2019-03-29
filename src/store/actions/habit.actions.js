@@ -10,12 +10,7 @@ export const REFRESH_HABIT_LIST = 'refresh-habit-list';
 export const refreshHabitList = () => async dispatch => {
   const operation = 'refreshHabitList'
   dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
-
-  const habitData = (await habitsService.get('user/rory-gaddin/habits.json')).data;
-  const habits = habitData
-  ? Object.keys(habitData).map(key => habitData[key])
-  : []
-
+  const habits = await habitsService.getAllHabits();
   dispatch(({ type: REFRESH_HABIT_LIST, habits: habits }))
   dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
 }
@@ -24,9 +19,7 @@ export const SAVE_HABIT = 'save-habit';
 export const saveHabit = habit => async dispatch => {
   const operation  = 'saveHabit'
   dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
-
-  await habitsService.post('user/rory-gaddin/habits.json', habit);
-  
+  await habitsService.saveHabit(habit);
   dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
   dispatch({ type: SAVE_HABIT, habit: habit });
 };
