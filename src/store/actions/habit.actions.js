@@ -6,6 +6,12 @@ export const requestNewHabitForm = () => ({
   type: REQUEST_NEW_HABIT_FORM
 })
 
+export const REQUEST_EDIT_HABIT_FORM = 'request-edit-habit-form';
+export const requestEditHabitForm = habit => ({
+  type: REQUEST_EDIT_HABIT_FORM,
+  habit: habit
+})
+
 export const REFRESH_HABIT_LIST = 'refresh-habit-list';
 export const refreshHabitList = () => async dispatch => {
   const operation = 'refreshHabitList'
@@ -19,11 +25,13 @@ export const SAVE_HABIT = 'save-habit';
 export const saveHabit = habit => async dispatch => {
   const operation  = 'saveHabit'
   dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
-  await habitsService.saveHabit(habit);
-  dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
-  dispatch({ type: SAVE_HABIT, habit: habit });
-};
 
+  const isNew = !habit.id;
+  const savedHabit = await habitsService.saveHabit(habit);
+
+  dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
+  dispatch({ type: SAVE_HABIT, habit: savedHabit, isNew: isNew });
+};
 export const CHANGE_DISPLAY_STATE = 'change-display-state';
 export const changeDisplayState = newState => ({
   type: CHANGE_DISPLAY_STATE,
@@ -36,3 +44,5 @@ export const changeDataLoadingStatus = (status, operation) => ({
   state: status,
   operation: operation
 })
+
+export const NEW_HABIT_ADDED = 'new-habit-added';

@@ -46,10 +46,17 @@ export default class HabitConfiguration extends Component {
 
   saveHandler = () => {
     if (this.formIsValid) {
-      this.props.onSave({
+
+      const _updatedHabit = {
         name: this.state.name,
         question: this.state.question
-      })
+      };
+
+      if (this.props.habit) {
+        _updatedHabit.id = this.props.habit.id
+      }
+
+      this.props.onSave(_updatedHabit)
     }
   }
 

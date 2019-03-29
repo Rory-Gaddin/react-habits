@@ -3,7 +3,8 @@ import * as habitActions from '../actions/habit.actions';
 
 export const HabitDisplayState = {
   SHOW_HABIT_LIST: 'show-habits',
-  NEW_HABIT: 'new-habit'
+  NEW_HABIT: 'new-habit',
+  EDIT_HABIT: 'edit-habit'
 }
 
 export const DataLoadingState = {
@@ -15,6 +16,7 @@ const dataLoadingOperations = {};
 
 const initialState = {
   habits: [],
+  editedHabit: null,
   displayState: HabitDisplayState.SHOW_HABIT_LIST,
   dataLoadingState: DataLoadingState.IDLE
 }
@@ -24,6 +26,7 @@ const reducer = (state = initialState, action) => {
     case habitActions.REQUEST_NEW_HABIT_FORM: return requestNewHabitForm(state, action);
     case habitActions.REFRESH_HABIT_LIST: return refreshHabitList(state, action);
     case habitActions.SAVE_HABIT: return saveHabit(state, action);
+    case habitActions.REQUEST_EDIT_HABIT_FORM: return requestEditHabitForm(state, action);
     case habitActions.CHANGE_DISPLAY_STATE: return changeDisplayState(state, action);
     case habitActions.CHANGE_DATA_LOADING_STATUS: return changeDataLoadingStatus(state, action);
 
@@ -79,8 +82,26 @@ const refreshHabitList = (state, action) => {
 }
 
 const saveHabit = (state, action) => {
+  const habits = state.habits.slice();
+
+  if (!action.isNew) {
+    let spliceIndex = habits.findIndex(h => h.id === action.habit.id);
+    if (spliceIndex === -1) spliceIndex = habits.length;
+    habits.splice(spliceIndex, 1, action.habit);
+  } else {
+    habits.push(action.habit);
+  }
+
   return {...state,
-    habits: state.habits.concat(action.habit).sort(sortHabits)
+    habits: habits.sort(sortHabits),
+    editedHabit: null
+  }
+}
+
+const requestEditHabitForm = (state, action) => {
+  return {...state,
+    editedHabit: action.habit,
+    displayState: HabitDisplayState.EDIT_HABIT
   }
 }
 
