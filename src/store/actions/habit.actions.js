@@ -1,4 +1,5 @@
 import { DataLoadingState } from "../reducers/habit.reducer";
+import habitsService from './../../http-services/habits-service';
 
 export const REQUEST_NEW_HABIT_FORM = 'request-new-habit-form';
 export const requestNewHabitForm = () => ({
@@ -6,29 +7,28 @@ export const requestNewHabitForm = () => ({
 })
 
 export const REFRESH_HABIT_LIST = 'refresh-habit-list';
-export const refreshHabitList = () => dispatch => {
+export const refreshHabitList = () => async dispatch => {
   const operation = 'refreshHabitList'
   dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
-  
-  setTimeout(() => {
-    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
-    dispatch(({ type: REFRESH_HABIT_LIST, habits: [] }))
-  }, 2000)
+
+  const habitData = (await habitsService.get('user/rory-gaddin/habits.json')).data;
+  const habits = habitData
+  ? Object.keys(habitData).map(key => habitData[key])
+  : []
+
+  dispatch(({ type: REFRESH_HABIT_LIST, habits: habits }))
+  dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
 }
 
 export const SAVE_HABIT = 'save-habit';
-export const saveHabit = habit => dispatch => {
+export const saveHabit = habit => async dispatch => {
   const operation  = 'saveHabit'
   dispatch(changeDataLoadingStatus(DataLoadingState.LOADING, operation));
 
-  setTimeout(() => {
-    dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
-
-    dispatch({
-      type: SAVE_HABIT,
-      habit: habit
-    });
-  }, 2000);
+  await habitsService.post('user/rory-gaddin/habits.json', habit);
+  
+  dispatch(changeDataLoadingStatus(DataLoadingState.WAITING, operation));
+  dispatch({ type: SAVE_HABIT, habit: habit });
 };
 
 export const CHANGE_DISPLAY_STATE = 'change-display-state';
