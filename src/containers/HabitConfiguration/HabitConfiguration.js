@@ -20,7 +20,7 @@ export default class HabitConfiguration extends Component {
           value={this.state.question}
         ></Input>
         <RaisedButton
-          disabled={!this.formIsValid}
+          disabled={!this.formIsValid()}
           onClick={this.saveHandler}
         >Save Habit</RaisedButton>
       </div>
@@ -45,7 +45,7 @@ export default class HabitConfiguration extends Component {
   }
 
   saveHandler = () => {
-    if (this.formIsValid) {
+    if (this.formIsValid()) {
 
       const _updatedHabit = {
         name: this.state.name,
