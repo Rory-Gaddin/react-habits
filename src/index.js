@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { logger } from './store/middleware/logger';
 import habitsReducer from './store/reducers/habit.reducer';
-import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   HABITS: habitsReducer
@@ -15,7 +14,7 @@ const rootReducer = combineReducers({
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(logger, thunk)
+  applyMiddleware(thunk)
 ));
 
 ReactDOM.render(
