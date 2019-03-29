@@ -64,7 +64,7 @@ const Input = props => {
   }
 
   return (
-    <div>
+    <div className={styles.InputContainer}>
       <label>{process.label}</label>
       {inputElement}
       <div className={styles.HintContainer}>

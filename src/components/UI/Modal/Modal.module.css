@@ -1,21 +1,19 @@
 .Modal {
   position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 500;
   background-color: white;
   width: 50%;
-  /* border: 3px solid #fff; */
+  min-width: 600px;
   border-radius: 12px;
   box-shadow: 4px 4px 24px rgba(0,0,0,0.5);
-  /* padding: 16px; */
-  /* padding: 16px; */
-  top: 30%;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
   text-align: center;
   font-size: larger;
   font-weight: bolder;
-  margin: auto;
-  left: 24%;
   overflow-x: hidden;
 }
 
@@ -25,4 +23,13 @@
 
 .ModalContent {
   margin-top: 24px;
+}
+
+@media(max-width: 840px) {
+  .Modal {
+    width: calc(100% - 16px);
+    min-width: unset;
+    font-size: unset;
+    font-weight: unset;
+  }
 }

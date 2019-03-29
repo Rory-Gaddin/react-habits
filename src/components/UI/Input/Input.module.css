@@ -13,9 +13,12 @@
 .InputElement {
   outline: none;
   border: 1px solid #ccc;
+  border-radius: 6px;
   background-color: white;
   font: inherit;
   padding: 6px 10px;
+  width: 90%;
+  margin: auto;
 }
 
 .InputElement:focus {
@@ -37,4 +40,8 @@
 
 .HintContainer {
   min-height: 12px;
+}
+
+.InputContainer {
+  width: 100%;
 }
