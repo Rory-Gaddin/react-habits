@@ -26,6 +26,14 @@ class App extends Component {
   state = {
     currentTheme: themes.lightTheme
   }
+
+  /* 
+    Lifecycle Hooks
+  */
+
+  componentDidMount() {
+    document.body.style.backgroundColor = this.state.currentTheme.background.primary.backgroundColor;
+  }
 }
 
 export default App;
